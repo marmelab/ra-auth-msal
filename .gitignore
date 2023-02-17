@@ -1,0 +1,6 @@
+node_modules
+build
+lib
+esm
+es6
+dist
