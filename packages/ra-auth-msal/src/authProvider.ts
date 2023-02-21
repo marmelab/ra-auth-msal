@@ -40,7 +40,7 @@ export type MsalAuthProviderParams = {
   ) => ReturnType<AuthProvider["getIdentity"]>;
 };
 
-export const MsalAuthProvider = ({
+export const msalAuthProvider = ({
   msalInstance,
   loginRequest = defaultLoginRequest,
   tokenRequest = defaultTokenRequest,
@@ -83,7 +83,10 @@ export const MsalAuthProvider = ({
 
       let token: AuthenticationResult | null = null;
       if (account) {
-        token = await msalInstance.acquireTokenSilent(tokenRequest);
+        token = await msalInstance.acquireTokenSilent({
+          account,
+          ...tokenRequest,
+        });
       }
 
       if (!account || !token) {
