@@ -2,14 +2,50 @@ import {
   PublicClientApplication,
   RedirectRequest,
   SilentRequest,
+  AccountInfo,
 } from "@azure/msal-browser";
 import { AuthProvider } from "react-admin";
 
-export const MsalAuthProvider = (
-  msalInstance: PublicClientApplication,
-  loginRequest: RedirectRequest,
-  tokenRequest: SilentRequest
-): AuthProvider => {
+const defaultLoginRequest = {
+  scopes: ["User.Read"],
+};
+
+const defaultTokenRequest = {
+  scopes: ["User.Read"],
+  forceRefresh: false,
+};
+
+const defaultGetPermissionsFromAccount = async () => {
+  return [];
+};
+
+const defaultGetIdentityFromAccount = async (account: AccountInfo) => {
+  return {
+    ...account,
+    id: account?.localAccountId,
+    fullName: account?.username,
+  };
+};
+
+export type MsalAuthProviderParams = {
+  msalInstance: PublicClientApplication;
+  loginRequest?: RedirectRequest;
+  tokenRequest?: SilentRequest;
+  getPermissionsFromAccount?: (
+    account: AccountInfo
+  ) => ReturnType<AuthProvider["getPermissions"]>;
+  getIdentityFromAccount?: (
+    account: AccountInfo
+  ) => ReturnType<AuthProvider["getIdentity"]>;
+};
+
+export const MsalAuthProvider = ({
+  msalInstance,
+  loginRequest = defaultLoginRequest,
+  tokenRequest = defaultTokenRequest,
+  getPermissionsFromAccount = defaultGetPermissionsFromAccount,
+  getIdentityFromAccount = defaultGetIdentityFromAccount,
+}: MsalAuthProviderParams): AuthProvider => {
   // We need to set up the redirect handler at a global scope to make sure all redirects are handled,
   // otherwise the lib can lock up because a redirect is still marked as pending and has not been handled.
   // Besides, we can call this handler again later and still gather the response because it is cached internally.
@@ -58,17 +94,12 @@ export const MsalAuthProvider = (
 
     async getPermissions() {
       const account = msalInstance.getActiveAccount();
-      console.log(account);
-      return []; // TODO
+      return getPermissionsFromAccount(account);
     },
 
     async getIdentity() {
       const account = msalInstance.getActiveAccount();
-      return {
-        ...account,
-        id: account?.localAccountId,
-        fullName: account?.username,
-      };
+      return getIdentityFromAccount(account);
     },
 
     async handleCallback() {

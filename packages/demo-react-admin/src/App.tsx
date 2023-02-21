@@ -4,7 +4,12 @@ import fakeRestProvider from "ra-data-fakerest";
 import React from "react";
 import { Admin, CustomRoutes, Resource } from "react-admin";
 import { BrowserRouter, Route } from "react-router-dom";
-import { loginRequest, tokenRequest, msalConfig } from "./authConfig";
+import {
+  loginRequest,
+  tokenRequest,
+  msalConfig,
+  getPermissionsFromAccount,
+} from "./authConfig";
 import comments from "./comments";
 import CustomRouteLayout from "./customRouteLayout";
 import CustomRouteNoLayout from "./customRouteNoLayout";
@@ -18,7 +23,12 @@ import users from "./users";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
-  const authProvider = MsalAuthProvider(myMSALObj, loginRequest, tokenRequest);
+  const authProvider = MsalAuthProvider({
+    msalInstance: myMSALObj,
+    loginRequest,
+    tokenRequest,
+    getPermissionsFromAccount,
+  });
 
   return (
     <BrowserRouter>
