@@ -6,11 +6,11 @@
 export const msalConfig = {
   auth: {
     // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
-    clientId: "c7675a83-457a-4179-93cb-d6b078848c5d",
+    clientId: import.meta.env.VITE_MSAL_CLIENT_ID,
     // Full directory URL, in the form of https://login.microsoftonline.com/<tenant-id>
-    authority: "https://login.microsoftonline.com/common",
+    authority: import.meta.env.VITE_MSAL_AUTHORITY,
     // Full redirect URL, in form of http://localhost:8080/auth-callback
-    redirectUri: "http://localhost:8080/auth-callback",
+    redirectUri: `${import.meta.env.VITE_APP_BASE_URI}/auth-callback`,
     // We need to disable this feature because it is already handled by react-admin, and would otherwise conflict
     navigateToLoginRequestUrl: false,
   },

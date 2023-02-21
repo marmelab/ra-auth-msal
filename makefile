@@ -6,8 +6,18 @@ help:
 install: ## Install all dependencies
 	yarn
 
-start: ## Start the Demo app
-	yarn run-demo
+build-ra-auth-msal:
+	@echo "Transpiling ra-auth-msal files...";
+	@cd ./packages/ra-auth-msal && yarn build
 
-build: ## Build the application
-	yarn run build
+build-demo-react-admin:
+	@echo "Transpiling demo files...";
+	@cd ./packages/demo-react-admin && yarn build
+
+build: build-ra-auth-msal build-demo-react-admin ## compile ES6 files to JS
+
+start: ## Start the demo
+	@cd ./packages/demo-react-admin && yarn start
+
+publish: ## Publish the package
+	cd packages/ra-auth-masl && npm publish
