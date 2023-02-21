@@ -1,5 +1,5 @@
 import { PublicClientApplication } from "@azure/msal-browser";
-import { MsalAuthProvider } from "ra-auth-msal";
+import { MsalAuthProvider, LoginPage } from "ra-auth-msal";
 import fakeRestProvider from "ra-data-fakerest";
 import React from "react";
 import { Admin, CustomRoutes, Resource } from "react-admin";
@@ -28,6 +28,7 @@ const App = () => {
         i18nProvider={i18nProvider}
         title="Example Admin"
         layout={Layout}
+        loginPage={LoginPage}
       >
         {(permissions) => (
           <>
