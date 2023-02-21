@@ -3,6 +3,7 @@ import {
   RedirectRequest,
   SilentRequest,
   AccountInfo,
+  AuthenticationResult,
 } from "@azure/msal-browser";
 import { AuthProvider } from "react-admin";
 
@@ -80,13 +81,12 @@ export const MsalAuthProvider = ({
         account = accounts[0];
       }
 
-      if (!account) {
-        msalInstance.loginRedirect(loginRequest);
-        throw new Error("Unauthorized");
+      let token: AuthenticationResult | null = null;
+      if (account) {
+        token = await msalInstance.acquireTokenSilent(tokenRequest);
       }
 
-      const token = await msalInstance.acquireTokenSilent(tokenRequest);
-      if (!token) {
+      if (!account || !token) {
         msalInstance.loginRedirect(loginRequest);
         throw new Error("Unauthorized");
       }
