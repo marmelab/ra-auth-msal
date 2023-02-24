@@ -40,6 +40,46 @@ export type MsalAuthProviderParams = {
   ) => ReturnType<AuthProvider["getIdentity"]>;
 };
 
+/**
+ * Function that returns an authProvider using the Microsoft Authentication Library (MSAL),
+ * ready to be used with react-admin.
+ * 
+ * @param msalInstance - The MSAL Client instance
+ * @param loginRequest - The login request configuration object
+ * @param tokenRequest - The token request configuration object
+ * @param getPermissionsFromAccount - Function allowing to customize how to compute the permissions from the account info
+ * @param getIdentityFromAccount - Function allowing to customize how to compute the identity from the account info
+ * 
+ * @example
+ * ```tsx
+ * import { PublicClientApplication } from "@azure/msal-browser";
+ * import { LoginPage, msalAuthProvider } from "ra-auth-msal";
+ * import { Admin } from "react-admin";
+ * import { BrowserRouter } from "react-router-dom";
+ * import { msalConfig } from "./authConfig";
+ * import { dataProvider } from "./dataProvider";
+ * 
+ * const myMSALObj = new PublicClientApplication(msalConfig);
+ * 
+ * const App = () => {
+ *   const authProvider = msalAuthProvider({
+ *     msalInstance: myMSALObj,
+ *   });
+ *   
+ *   return (
+ *     <BrowserRouter>
+ *       <Admin 
+ *         authProvider={authProvider} 
+ *         dataProvider={dataProvider}
+ *         loginPage={LoginPage}
+ *       >
+ *         ...
+ *      </Admin>
+ *   </BrowserRouter>
+ *  );
+ * };
+ * ```
+ */
 export const msalAuthProvider = ({
   msalInstance,
   loginRequest = defaultLoginRequest,
@@ -61,10 +101,7 @@ export const msalAuthProvider = ({
     async logout() {
       const account = msalInstance.getActiveAccount();
       if (account) {
-        const logoutRequest = {
-          account,
-        };
-        await msalInstance.logoutRedirect(logoutRequest);
+        await msalInstance.logoutRedirect({ account });
       }
     },
 

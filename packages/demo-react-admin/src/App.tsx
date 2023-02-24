@@ -1,14 +1,14 @@
 import { PublicClientApplication } from "@azure/msal-browser";
-import { msalAuthProvider, LoginPage, msalHttpClient } from "ra-auth-msal";
+import { LoginPage, msalAuthProvider } from "ra-auth-msal";
 import fakeRestProvider from "ra-data-fakerest";
-import React, { useEffect } from "react";
+import React from "react";
 import { Admin, CustomRoutes, Resource } from "react-admin";
 import { BrowserRouter, Route } from "react-router-dom";
 import {
-  loginRequest,
-  tokenRequest,
-  msalConfig,
   getPermissionsFromAccount,
+  loginRequest,
+  msalConfig,
+  tokenRequest,
 } from "./authConfig";
 import comments from "./comments";
 import CustomRouteLayout from "./customRouteLayout";
@@ -29,16 +29,6 @@ const App = () => {
     tokenRequest,
     getPermissionsFromAccount,
   });
-  const httpClient = msalHttpClient({
-    msalInstance: myMSALObj,
-    tokenRequest,
-  });
-  // TODO remove me
-  useEffect(() => {
-    setTimeout(() => {
-      httpClient("https://jsonplaceholder.typicode.com/posts");
-    }, 1000);
-  }, []);
 
   return (
     <BrowserRouter>

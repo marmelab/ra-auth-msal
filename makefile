@@ -20,4 +20,4 @@ start: ## Start the demo
 	@cd ./packages/demo-react-admin && yarn start
 
 publish: ## Publish the package
-	cd packages/ra-auth-masl && npm publish
+	cd packages/ra-auth-msal && npm publish

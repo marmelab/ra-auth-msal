@@ -34,7 +34,7 @@ export const msalConfig: Configuration = {
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
 export const loginRequest: RedirectRequest = {
-  scopes: ["User.Read", "group.Read.All"],
+  scopes: ["User.Read"],
 };
 
 /**
@@ -46,6 +46,19 @@ export const tokenRequest: SilentRequest = {
   forceRefresh: false, // Set this to "true" to skip a cached token and go to the server to get a new token
 };
 
+/**
+ * Customize this map to match your own roles and permissions
+ */
+const rolesPermissionMap = {
+  "12345678-1234-1234-1234-123456789012": "user",
+  "12345678-1234-1234-1234-123456789013": "admin",
+};
+
+/**
+ * Custom function to map roles to permissions, using the rolesPermissionMap above.
+ * Alternatively, you can use the MS Graph API to get more information about the user's roles and groups.
+ */
 export const getPermissionsFromAccount = async (account: AccountInfo) => {
-  return []; // TODO
+  const roles = account?.idTokenClaims?.roles ?? [];
+  return roles.map((role) => rolesPermissionMap[role]);
 };
