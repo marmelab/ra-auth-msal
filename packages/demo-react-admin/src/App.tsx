@@ -1,6 +1,6 @@
 import { PublicClientApplication } from "@azure/msal-browser";
-import { LoginPage, msalAuthProvider } from "ra-auth-msal";
-import fakeRestProvider from "ra-data-fakerest";
+import { LoginPage, msalAuthProvider, msalHttpClient } from "ra-auth-msal";
+import jsonServerProvider from "ra-data-json-server";
 import React from "react";
 import { Admin, CustomRoutes, Resource } from "react-admin";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -13,7 +13,6 @@ import {
 import comments from "./comments";
 import CustomRouteLayout from "./customRouteLayout";
 import CustomRouteNoLayout from "./customRouteNoLayout";
-import data from "./data";
 import i18nProvider from "./i18nProvider";
 import Layout from "./Layout";
 import posts from "./posts";
@@ -30,11 +29,18 @@ const App = () => {
     getPermissionsFromAccount,
   });
 
+  const httpClient = msalHttpClient({
+    msalInstance: myMSALObj,
+    tokenRequest,
+  });
+
+  const dataProvider = jsonServerProvider("http://localhost:3000", httpClient);
+
   return (
     <BrowserRouter>
       <Admin
         authProvider={authProvider}
-        dataProvider={fakeRestProvider(data)}
+        dataProvider={dataProvider}
         i18nProvider={i18nProvider}
         title="Example Admin"
         layout={Layout}

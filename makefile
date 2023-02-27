@@ -16,8 +16,14 @@ build-demo-react-admin:
 
 build: build-ra-auth-msal build-demo-react-admin ## compile ES6 files to JS
 
-start: ## Start the demo
+start-demo: ## Start the demo
 	@cd ./packages/demo-react-admin && yarn start
+
+start-fake-api: ## Start the fake API
+	@cd ./packages/demo-fake-api && yarn start
+
+start: ## Start the demo
+	@(trap 'kill 0' INT; ${MAKE} start-fake-api & ${MAKE} start-demo)
 
 publish: ## Publish the package
 	cd packages/ra-auth-msal && npm publish
