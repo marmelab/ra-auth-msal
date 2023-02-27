@@ -306,6 +306,77 @@ const App = () => {
 export default App;
 ```
 
+
+### `redirectOnCheckAuth`
+
+You can choose whether the authProvider should redirect to the MS login form when the user is not authenticated. By default, it is set to `true`.
+
+It can be useful to set it to `false` when you want to trigger the redirection only from a custom login page.
+
+```jsx
+// in src/authConfig.js
+export const msalConfig = {
+  // ...
+};
+```
+
+```jsx
+// in src/CustomLoginPage.jsx
+import * as React from "react";
+import { Button } from "@mui/material";
+import { useLogin } from "react-admin";
+
+/**
+ * Csutom Login Page used to trigger the redirection to the MS login page.
+ */
+export const CustomLoginPage = () => {
+  const login = useLogin();
+  return (
+    <div>
+      <Button onClick={() => login({})}>
+          Sign in with Microsoft
+      </Button>
+    </div>
+  );
+};
+```
+
+```jsx
+// in src/App.jsx
+import React from 'react';
+import { Admin, Resource } from 'react-admin';
+import { BrowserRouter } from "react-router-dom";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { msalAuthProvider } from "ra-auth-msal";
+import { CustomLoginPage } from "./CustomLoginPage";
+import dataProvider from './dataProvider';
+import posts from './posts';
+import { msalConfig } from "./authConfig";
+
+const myMSALObj = new PublicClientApplication(msalConfig);
+
+const App = () => {
+  const authProvider = msalAuthProvider({
+    msalInstance: myMSALObj,
+    redirectOnCheckAuth: false,
+  });
+
+  return (
+    <BrowserRouter>
+       <Admin
+           authProvider={authProvider}
+           dataProvider={dataProvider}
+           title="Example Admin"
+           loginPage={CustomLoginPage}
+        >
+            <Resource name="posts" {...posts} />
+      </Admin>
+    </BrowserRouter>
+   );
+};
+export default App;
+```
+
 ### `msalHttpClient`
 
 ```jsx
