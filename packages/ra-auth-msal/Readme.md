@@ -1,8 +1,8 @@
 # ra-auth-msal
 
-An auth provider for [react-admin](https://github.com/marmelab/react-admin) which handles authentication using the [Microsoft Authentication Library (MSAL)](https://learn.microsoft.com/fr-fr/azure/active-directory/develop/msal-overview).
+An auth provider for [react-admin](https://github.com/marmelab/react-admin) that handles authentication using the [Microsoft Authentication Library (MSAL)](https://learn.microsoft.com/fr-fr/azure/active-directory/develop/msal-overview).
 
-This is useful for instance if you want to use [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/) to authenticate your users.
+This is useful when using [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/) to authenticate your users.
 
 This package provides:
 
@@ -80,7 +80,7 @@ const App = () => {
 export default App;
 ```
 
-**Tip:** You need to wrap your `<Admin>` component in a `<BrowserRouter>` for this library to work. Indeed, MSAL uses a hash-based routing strategy when redirecting back to your app, which would be incompatible with a `<HashRouter>`.
+**Tip:** You need to wrap your `<Admin>` component in a `<BrowserRouter>` for this library to work. Indeed, MSAL uses a hash-based routing strategy when redirecting back to your app, which is incompatible with a `<HashRouter>`.
 
 ## Advanced Usage
 
