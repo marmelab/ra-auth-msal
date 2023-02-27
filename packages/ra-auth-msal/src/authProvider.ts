@@ -38,18 +38,19 @@ export type MsalAuthProviderParams = {
   getIdentityFromAccount?: (
     account: AccountInfo
   ) => ReturnType<AuthProvider["getIdentity"]>;
+  redirectOnCheckAuth?: boolean;
 };
 
 /**
  * Function that returns an authProvider using the Microsoft Authentication Library (MSAL),
  * ready to be used with react-admin.
- * 
+ *
  * @param msalInstance - The MSAL Client instance
  * @param loginRequest - The login request configuration object
  * @param tokenRequest - The token request configuration object
  * @param getPermissionsFromAccount - Function allowing to customize how to compute the permissions from the account info
  * @param getIdentityFromAccount - Function allowing to customize how to compute the identity from the account info
- * 
+ *
  * @example
  * ```tsx
  * import { PublicClientApplication } from "@azure/msal-browser";
@@ -58,18 +59,18 @@ export type MsalAuthProviderParams = {
  * import { BrowserRouter } from "react-router-dom";
  * import { msalConfig } from "./authConfig";
  * import { dataProvider } from "./dataProvider";
- * 
+ *
  * const myMSALObj = new PublicClientApplication(msalConfig);
- * 
+ *
  * const App = () => {
  *   const authProvider = msalAuthProvider({
  *     msalInstance: myMSALObj,
  *   });
- *   
+ *
  *   return (
  *     <BrowserRouter>
- *       <Admin 
- *         authProvider={authProvider} 
+ *       <Admin
+ *         authProvider={authProvider}
  *         dataProvider={dataProvider}
  *         loginPage={LoginPage}
  *       >
@@ -86,6 +87,7 @@ export const msalAuthProvider = ({
   tokenRequest = defaultTokenRequest,
   getPermissionsFromAccount = defaultGetPermissionsFromAccount,
   getIdentityFromAccount = defaultGetIdentityFromAccount,
+  redirectOnCheckAuth = true,
 }: MsalAuthProviderParams): AuthProvider => {
   // We need to set up the redirect handler at a global scope to make sure all redirects are handled,
   // otherwise the lib can lock up because a redirect is still marked as pending and has not been handled.
@@ -94,8 +96,8 @@ export const msalAuthProvider = ({
 
   return {
     async login() {
-      // should never be called
-      throw Error("Not implemented");
+      // Used when the redirection to the MS login form is done from a custom login page
+      msalInstance.loginRedirect(loginRequest);
     },
 
     async logout() {
@@ -127,7 +129,9 @@ export const msalAuthProvider = ({
       }
 
       if (!account || !token) {
-        msalInstance.loginRedirect(loginRequest);
+        if (redirectOnCheckAuth) {
+          msalInstance.loginRedirect(loginRequest);
+        }
         throw new Error("Unauthorized");
       }
     },

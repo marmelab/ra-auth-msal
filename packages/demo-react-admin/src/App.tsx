@@ -11,6 +11,7 @@ import {
   tokenRequest,
 } from "./authConfig";
 import comments from "./comments";
+import { CustomLoginPage } from "./CustomLoginPage";
 import CustomRouteLayout from "./customRouteLayout";
 import CustomRouteNoLayout from "./customRouteNoLayout";
 import i18nProvider from "./i18nProvider";
@@ -18,6 +19,8 @@ import Layout from "./Layout";
 import posts from "./posts";
 import tags from "./tags";
 import users from "./users";
+
+const redirectOnCheckAuth = true;
 
 const myMSALObj = new PublicClientApplication(msalConfig);
 
@@ -27,6 +30,7 @@ const App = () => {
     loginRequest,
     tokenRequest,
     getPermissionsFromAccount,
+    redirectOnCheckAuth,
   });
 
   const httpClient = msalHttpClient({
@@ -44,7 +48,7 @@ const App = () => {
         i18nProvider={i18nProvider}
         title="Example Admin"
         layout={Layout}
-        loginPage={LoginPage}
+        loginPage={redirectOnCheckAuth ? LoginPage : CustomLoginPage}
       >
         {(permissions) => (
           <>
