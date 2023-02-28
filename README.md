@@ -47,13 +47,17 @@ Now it is time to create some users and some groups, which will enable us to dem
 1. Choose `chris` as the **User Name** and `Chris Green` as the **Name**.
 1. In **Password**, select **Allow me to create the password**, and choose a password of your choice.
 1. In **Groups and roles**, select only the `users` group.
+1. Make sure **Block sign in** is set to **false**
 1. Click **Create**.
 1. Repeat the same steps to create a second user, called `John Smith`, and assign it both the `users` and `admins` groups.
 
 Lastly, we need to configure the app to include the **goups** claim in the ID token.
 
-1. In the **Azure Active Directory** Dashboard, select **Token configuration**.
+1. In the **Azure Active Directory** Dashboard
+1. Under **Manage**, select **App registrations** > and select the App you created before
+1. Select **Token configuration**.
 1. Click on **Add groups claim**.
+1. Select **Security groups**
 1. Inside both the **ID** and **Access** sections, check the **Emit group claims as roles** checkbox.
 1. Click **Save**.
 
@@ -80,8 +84,8 @@ Lastly, we need to edit the `rolesPermissionMap` inside `packages/demo-react-adm
  * Customize this map to match the ids of the groups you created in Azure AD
  */
 const rolesPermissionMap = {
-  "12345678-1234-1234-1234-123456789012": "user",
-  "12345678-1234-1234-1234-123456789013": "admin",
+  "199a772f-5fbe-42ce-8adb-2838a9b3d37f": "user",
+  "e3f75483-90e9-430a-86eb-fe97ed36b941": "admin",
 };
 ```
 
