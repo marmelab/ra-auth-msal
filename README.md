@@ -84,8 +84,8 @@ Lastly, we need to edit the `rolesPermissionMap` inside `packages/demo-react-adm
  * Customize this map to match the ids of the groups you created in Azure AD
  */
 const rolesPermissionMap = {
-  "199a772f-5fbe-42ce-8adb-2838a9b3d37f": "user",
-  "e3f75483-90e9-430a-86eb-fe97ed36b941": "admin",
+  "12345678-1234-1234-1234-123456789012": "user",
+  "12345678-1234-1234-1234-123456789013": "admin",
 };
 ```
 
