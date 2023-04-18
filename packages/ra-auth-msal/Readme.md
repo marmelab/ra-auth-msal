@@ -379,6 +379,10 @@ export default App;
 
 ### `msalHttpClient`
 
+`ra-auth-msal` includes an `msalHttpClient` that can be used to make authenticated requests to your API. This helper automatically adds the `accessToken` to the request headers.
+
+Here is an example with `ra-data-json-server`:
+
 ```jsx
 // in src/authConfig.js
 export const msalConfig = {
@@ -438,6 +442,23 @@ const App = () => {
    );
 };
 export default App;
+```
+
+**Tip:** By default `msalHttpClient` will use the `accessToken`. If you want to use the `idToken` instead, you will need to provide your own `httpClient` like so:
+
+```js
+import { fetchUtils } from "react-admin";
+
+const myHttpClient = ({ msalInstance, tokenRequest }) => async (url, options = {}) => {
+  const account = msalInstance.getActiveAccount();
+  const authResult = await msalInstance.acquireTokenSilent({
+    account,
+    ...tokenRequest,
+  });
+  const token = authResult && authResult.idToken;
+  const user = { authenticated: !!token, token: `Bearer ${token}` };
+  return fetchUtils.fetchJson(url, { ...options, user });
+};
 ```
 
 ## Demo
