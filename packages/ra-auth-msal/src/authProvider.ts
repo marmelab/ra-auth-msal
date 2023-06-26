@@ -131,8 +131,12 @@ export const msalAuthProvider = ({
       if (!account || !token) {
         if (redirectOnCheckAuth) {
           msalInstance.loginRedirect(loginRequest);
+          
+          // Suppresses error message from being displayed
+          throw { message: false };
+        } else {
+          throw new Error("Unauthorized");
         }
-        throw new Error("Unauthorized");
       }
     },
 
