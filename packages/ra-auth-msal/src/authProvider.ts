@@ -134,9 +134,8 @@ export const msalAuthProvider = ({
           
           // Suppresses error message from being displayed
           throw { message: false };
-        } else {
-          throw new Error("Unauthorized");
-        }
+        } 
+        throw new Error("Unauthorized");
       }
     },
 
