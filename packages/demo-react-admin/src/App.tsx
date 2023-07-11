@@ -1,8 +1,19 @@
 import { PublicClientApplication } from "@azure/msal-browser";
-import { LoginPage, msalAuthProvider, msalHttpClient } from "ra-auth-msal";
+import {
+  LoginPage,
+  msalAuthProvider,
+  msalHttpClient,
+  msalRefreshAuth,
+} from "ra-auth-msal";
 import jsonServerProvider from "ra-data-json-server";
 import React from "react";
-import { Admin, CustomRoutes, Resource } from "react-admin";
+import {
+  Admin,
+  CustomRoutes,
+  Resource,
+  addRefreshAuthToAuthProvider,
+  addRefreshAuthToDataProvider,
+} from "react-admin";
 import { BrowserRouter, Route } from "react-router-dom";
 import {
   getPermissionsFromAccount,
@@ -38,7 +49,13 @@ const App = () => {
     tokenRequest,
   });
 
-  const dataProvider = jsonServerProvider("http://localhost:3000", httpClient);
+  const dataProvider = addRefreshAuthToDataProvider(
+    jsonServerProvider("http://localhost:3000", httpClient),
+    msalRefreshAuth({
+      msalInstance: myMSALObj,
+      tokenRequest,
+    })
+  );
 
   return (
     <BrowserRouter>
