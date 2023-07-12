@@ -15,6 +15,7 @@ This package provides:
 - Sign-in using any authentication flow supported by MSAL for Single Page Apps ([Authorization Code](https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-authentication-flows#authorization-code) and [Implicit Grant](https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-authentication-flows#implicit-grant)), with the ability to configure the scopes and optional claims
 - Get an access token for the user, with the ability to configure the scopes and optional claims, allowing for instance to query a [Microsoft Graph](https://learn.microsoft.com/en-us/graph/overview) endpoint
 - Use the user's roles and groups to compute permissions
+- Automatic token refresh
 
 ## Installation
 
@@ -460,6 +461,29 @@ const myHttpClient = ({ msalInstance, tokenRequest }) => async (url, options = {
   return fetchUtils.fetchJson(url, { ...options, user });
 };
 ```
+
+### `refreshAuth`
+
+The authProvider already supports automatic refresh of the token. However, if your dataProvider passes the token to your API, you should wrap it with [`addRefreshAuthToDataProvider`](https://marmelab.com/react-admin/addRefreshAuthToDataProvider.html) to ensure it also refreshes the token when needed:
+
+```js
+import { addRefreshAuthToDataProvider } from 'react-admin';
+import { msalRefreshAuth } from "ra-auth-msal";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { msalConfig, tokenRequest } from "./authConfig";
+import { dataProvider } from './dataProvider';
+
+const myMSALObj = new PublicClientApplication(msalConfig);
+
+const dataProvider = addRefreshAuthToDataProvider(
+    dataProvider,
+    msalRefreshAuth({
+      msalInstance: myMSALObj,
+      tokenRequest,
+    })
+);
+```
+
 
 ## Demo
 

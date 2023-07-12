@@ -5,15 +5,12 @@ import {
   AccountInfo,
   AuthenticationResult,
 } from "@azure/msal-browser";
-import { AuthProvider } from "react-admin";
+import { AuthProvider, addRefreshAuthToAuthProvider } from "react-admin";
+import { defaultTokenRequest } from "./constants";
+import { msalRefreshAuth } from "./refreshAuth";
 
 const defaultLoginRequest = {
   scopes: ["User.Read"],
-};
-
-const defaultTokenRequest = {
-  scopes: ["User.Read"],
-  forceRefresh: false,
 };
 
 const defaultGetPermissionsFromAccount = async () => {
@@ -94,7 +91,7 @@ export const msalAuthProvider = ({
   // Besides, we can call this handler again later and still gather the response because it is cached internally.
   msalInstance.handleRedirectPromise();
 
-  return {
+  const authProvider = {
     async login() {
       // Used when the redirection to the MS login form is done from a custom login page
       msalInstance.loginRedirect(loginRequest);
@@ -131,10 +128,10 @@ export const msalAuthProvider = ({
       if (!account || !token) {
         if (redirectOnCheckAuth) {
           msalInstance.loginRedirect(loginRequest);
-          
+
           // Suppresses error message from being displayed
           throw { message: false };
-        } 
+        }
         throw new Error("Unauthorized");
       }
     },
@@ -158,4 +155,9 @@ export const msalAuthProvider = ({
       msalInstance.setActiveAccount(account);
     },
   };
+
+  return addRefreshAuthToAuthProvider(
+    authProvider,
+    msalRefreshAuth({ msalInstance, tokenRequest })
+  );
 };
