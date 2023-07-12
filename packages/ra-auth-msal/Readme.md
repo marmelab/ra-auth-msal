@@ -469,8 +469,11 @@ The authProvider already supports automatic refresh of the token. However, if yo
 ```js
 import { addRefreshAuthToDataProvider } from 'react-admin';
 import { msalRefreshAuth } from "ra-auth-msal";
+import { PublicClientApplication } from "@azure/msal-browser";
 import { msalConfig, tokenRequest } from "./authConfig";
 import { dataProvider } from './dataProvider';
+
+const myMSALObj = new PublicClientApplication(msalConfig);
 
 const dataProvider = addRefreshAuthToDataProvider(
     dataProvider,

@@ -6814,7 +6814,7 @@ raw-body@2.5.2:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-admin@^4.12.1:
+react-admin@^4.12.1, react-admin@^4.9.0:
   version "4.12.1"
   resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-4.12.1.tgz#6408c810d451f5344dac998298be74c2773d494e"
   integrity sha512-NoFuK0cn9LglhZ0RJqgI4bEZe3tszn36yhZYL7M3Cn1rUMOFFNN7+ExaBI4v0QPJ/PDxhII71nhqdT5+njaWUw==
