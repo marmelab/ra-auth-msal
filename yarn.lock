@@ -6718,22 +6718,6 @@ ra-core@^4.12.1:
     react-is "^17.0.2"
     react-query "^3.32.1"
 
-ra-core@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-4.8.0.tgz#9b227f4452461a842bbf4b169a4b7b8a795d81a3"
-  integrity sha512-4FFf9YsuCF2jDVQhTcuXNTJowcM03butEzNJeJ9/DElAFTURwHuxsJMMpDVGMsBKOpsVmQIO0CEzPwTvkGygZQ==
-  dependencies:
-    clsx "^1.1.1"
-    date-fns "^2.19.0"
-    eventemitter3 "^4.0.7"
-    inflection "~1.12.0"
-    jsonexport "^3.2.0"
-    lodash "~4.17.5"
-    prop-types "^15.6.1"
-    query-string "^7.1.1"
-    react-is "^17.0.2"
-    react-query "^3.32.1"
-
 ra-data-fakerest@^4.12.1:
   version "4.12.1"
   resolved "https://registry.yarnpkg.com/ra-data-fakerest/-/ra-data-fakerest-4.12.1.tgz#e4e4f44f78488b47242e821b88ce14a1a94bf6a6"
@@ -6757,27 +6741,12 @@ ra-i18n-polyglot@^4.12.1:
     node-polyglot "^2.2.2"
     ra-core "^4.12.1"
 
-ra-i18n-polyglot@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/ra-i18n-polyglot/-/ra-i18n-polyglot-4.8.0.tgz#f50358924c2c1905da83947d7614d0aa8f2345b6"
-  integrity sha512-aVq+ZeYyyvle+pyTMkIPILFAPrfK7OOBVl80pDOg937TcGLEYrC9h9jGrz1km/0fO7pyE41bQzIBCJ/6Qhieew==
-  dependencies:
-    node-polyglot "^2.2.2"
-    ra-core "^4.8.0"
-
 ra-language-english@^4.12.1:
   version "4.12.1"
   resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-4.12.1.tgz#d913c3416aab1ded952edbd7735e8b2d8d14bf2b"
   integrity sha512-Xsqt4eL2/SQehBMPw4MNAAL1zOQN0j7xSYxVr+f07PY/9wqHgnkmg8qGd3wGL03/os6om5cShQLmih+fryuK6A==
   dependencies:
     ra-core "^4.12.1"
-
-ra-language-english@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-4.8.0.tgz#6bcc15c74505d27e797bff7e58e295b54a8358e5"
-  integrity sha512-UP5PjQ2acKN6e1vRmGG6h0H3mC7mVwucQhe3BLrLFxnKRJ+eDCnNwW5SS/feIjeBWm0o6z7KdhHCVUP9TYTdIA==
-  dependencies:
-    ra-core "^4.8.0"
 
 ra-language-french@^4.12.1:
   version "4.12.1"
@@ -6796,25 +6765,6 @@ ra-ui-materialui@^4.12.1:
     css-mediaquery "^0.1.2"
     dompurify "^2.4.3"
     hotscript "^1.0.12"
-    inflection "~1.12.0"
-    jsonexport "^3.2.0"
-    lodash "~4.17.5"
-    prop-types "^15.7.0"
-    query-string "^7.1.1"
-    react-dropzone "^12.0.4"
-    react-error-boundary "^3.1.4"
-    react-query "^3.32.1"
-    react-transition-group "^4.4.1"
-
-ra-ui-materialui@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-4.8.0.tgz#a759b8c3a4ecc09e5b8fb171ee4dfb03b377cdf6"
-  integrity sha512-RRy3IFzdqMy0oQTxjwbnpqdY7kNHPr3QiXQcutxF1KLf334jVK7K+i31diM51FOpmIrhieXEeGk/8hwAZf+fpg==
-  dependencies:
-    autosuggest-highlight "^3.1.1"
-    clsx "^1.1.1"
-    css-mediaquery "^0.1.2"
-    dompurify "^2.4.3"
     inflection "~1.12.0"
     jsonexport "^3.2.0"
     lodash "~4.17.5"
@@ -6882,24 +6832,6 @@ react-admin@^4.12.1:
     react-router "^6.1.0"
     react-router-dom "^6.1.0"
 
-react-admin@^4.7.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-4.8.0.tgz#55e42e7c16e952442660eed3de38cffe8c13b9e4"
-  integrity sha512-fu9Ggg01UXuGHlnVRbvYBn5IUQr5+Kpm8KNU4HnRNViEhneMvXdlFsa4zb04SgqbmRNsfOuQuF8oJ9rUgDo0mQ==
-  dependencies:
-    "@emotion/react" "^11.4.1"
-    "@emotion/styled" "^11.3.0"
-    "@mui/icons-material" "^5.0.1"
-    "@mui/material" "^5.0.2"
-    history "^5.1.0"
-    ra-core "^4.8.0"
-    ra-i18n-polyglot "^4.8.0"
-    ra-language-english "^4.8.0"
-    ra-ui-materialui "^4.8.0"
-    react-hook-form "^7.40.0"
-    react-router "^6.1.0"
-    react-router-dom "^6.1.0"
-
 react-app-polyfill@^1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-1.0.6.tgz#890f8d7f2842ce6073f030b117de9130a5f385f0"
@@ -6936,7 +6868,7 @@ react-error-boundary@^3.1.4:
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-react-hook-form@^7.34.2, react-hook-form@^7.40.0:
+react-hook-form@^7.34.2:
   version "7.43.1"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.43.1.tgz#0d0d7822f3f7fc05ffc41d5f012b49b90fcfa0f0"
   integrity sha512-+s3+s8LLytRMriwwuSqeLStVjRXFGxgjjx2jED7Z+wz1J/88vpxieRQGvJVvzrzVxshZ0BRuocFERb779m2kNg==
