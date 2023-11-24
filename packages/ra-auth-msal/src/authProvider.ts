@@ -88,7 +88,7 @@ export const msalAuthProvider = ({
   getPermissionsFromAccount = defaultGetPermissionsFromAccount,
   getIdentityFromAccount = defaultGetIdentityFromAccount,
   redirectOnCheckAuth = true,
-  enableDeepLinkRedirect = false,
+  enableDeepLinkRedirect = true,
 }: MsalAuthProviderParams): AuthProvider => {
   // We need to set up the redirect handler at a global scope to make sure all redirects are handled,
   // otherwise the lib can lock up because a redirect is still marked as pending and has not been handled.

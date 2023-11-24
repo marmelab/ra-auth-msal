@@ -41,7 +41,6 @@ const App = () => {
     tokenRequest,
     getPermissionsFromAccount,
     redirectOnCheckAuth,
-    enableDeepLinkRedirect: true,
   });
 
   const httpClient = msalHttpClient({
