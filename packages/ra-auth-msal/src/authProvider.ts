@@ -95,13 +95,14 @@ export const msalAuthProvider = ({
   // Besides, we can call this handler again later and still gather the response because it is cached internally.
   msalInstance.handleRedirectPromise();
 
+  const canDeepLinkRedirect =
+    enableDeepLinkRedirect &&
+    typeof window != undefined &&
+    typeof sessionStorage != undefined;
+
   const authProvider = {
     async login() {
-      if (
-        enableDeepLinkRedirect &&
-        typeof window != undefined &&
-        typeof sessionStorage != undefined
-      ) {
+      if (canDeepLinkRedirect) {
         // We cannot use react-router location here, as we are not in a router context,
         // So we need to fallback to native browser APIs.
         sessionStorage.setItem(MSAL_REDIRECT_KEY, window.location.href);
@@ -168,11 +169,7 @@ export const msalAuthProvider = ({
       }
       msalInstance.setActiveAccount(account);
 
-      if (
-        enableDeepLinkRedirect &&
-        typeof window != undefined &&
-        typeof sessionStorage != undefined
-      ) {
+      if (canDeepLinkRedirect) {
         // We cannot use react-router redirect here, as we are not in a router context,
         // So we need to fallback to native browser APIs.
         const redirectUrl =
