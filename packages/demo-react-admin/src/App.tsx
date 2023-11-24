@@ -11,11 +11,10 @@ import {
   Admin,
   CustomRoutes,
   Resource,
+  addRefreshAuthToAuthProvider,
   addRefreshAuthToDataProvider,
 } from "react-admin";
 import { BrowserRouter, Route } from "react-router-dom";
-import { CustomLoginPage } from "./CustomLoginPage";
-import Layout from "./Layout";
 import {
   getPermissionsFromAccount,
   loginRequest,
@@ -23,9 +22,11 @@ import {
   tokenRequest,
 } from "./authConfig";
 import comments from "./comments";
+import { CustomLoginPage } from "./CustomLoginPage";
 import CustomRouteLayout from "./customRouteLayout";
 import CustomRouteNoLayout from "./customRouteNoLayout";
 import i18nProvider from "./i18nProvider";
+import Layout from "./Layout";
 import posts from "./posts";
 import tags from "./tags";
 import users from "./users";
