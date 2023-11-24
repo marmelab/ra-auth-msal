@@ -36,6 +36,7 @@ export type MsalAuthProviderParams = {
     account: AccountInfo
   ) => ReturnType<AuthProvider["getIdentity"]>;
   redirectOnCheckAuth?: boolean;
+  enableDeepLinkRedirect?: boolean;
 };
 
 const MSAL_REDIRECT_KEY = "_ra_msal_key";
@@ -87,6 +88,7 @@ export const msalAuthProvider = ({
   getPermissionsFromAccount = defaultGetPermissionsFromAccount,
   getIdentityFromAccount = defaultGetIdentityFromAccount,
   redirectOnCheckAuth = true,
+  enableDeepLinkRedirect = false,
 }: MsalAuthProviderParams): AuthProvider => {
   // We need to set up the redirect handler at a global scope to make sure all redirects are handled,
   // otherwise the lib can lock up because a redirect is still marked as pending and has not been handled.
@@ -95,9 +97,15 @@ export const msalAuthProvider = ({
 
   const authProvider = {
     async login() {
-      // We cannot use react-router location here, as we are not in a router context,
-      // So we need to fallback to native browser APIs.
-      sessionStorage.setItem(MSAL_REDIRECT_KEY, window.location.href);
+      if (
+        enableDeepLinkRedirect &&
+        typeof window != undefined &&
+        typeof sessionStorage != undefined
+      ) {
+        // We cannot use react-router location here, as we are not in a router context,
+        // So we need to fallback to native browser APIs.
+        sessionStorage.setItem(MSAL_REDIRECT_KEY, window.location.href);
+      }
 
       // Used when the redirection to the MS login form is done from a custom login page
       msalInstance.loginRedirect(loginRequest);
@@ -160,12 +168,18 @@ export const msalAuthProvider = ({
       }
       msalInstance.setActiveAccount(account);
 
-      // We cannot use react-router redirect here, as we are not in a router context,
-      // So we need to fallback to native browser APIs.
-      const redirectUrl =
-        sessionStorage.getItem(MSAL_REDIRECT_KEY) ?? window.location.origin;
-      window.location.replace(redirectUrl);
-      sessionStorage.removeItem(MSAL_REDIRECT_KEY);
+      if (
+        enableDeepLinkRedirect &&
+        typeof window != undefined &&
+        typeof sessionStorage != undefined
+      ) {
+        // We cannot use react-router redirect here, as we are not in a router context,
+        // So we need to fallback to native browser APIs.
+        const redirectUrl =
+          sessionStorage.getItem(MSAL_REDIRECT_KEY) ?? window.location.origin;
+        window.location.replace(redirectUrl);
+        sessionStorage.removeItem(MSAL_REDIRECT_KEY);
+      }
     },
   };
 
