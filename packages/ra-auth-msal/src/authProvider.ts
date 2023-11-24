@@ -1,9 +1,9 @@
 import {
+  AccountInfo,
+  AuthenticationResult,
   PublicClientApplication,
   RedirectRequest,
   SilentRequest,
-  AccountInfo,
-  AuthenticationResult,
 } from "@azure/msal-browser";
 import { AuthProvider, addRefreshAuthToAuthProvider } from "react-admin";
 import { defaultTokenRequest } from "./constants";
@@ -37,6 +37,8 @@ export type MsalAuthProviderParams = {
   ) => ReturnType<AuthProvider["getIdentity"]>;
   redirectOnCheckAuth?: boolean;
 };
+
+const MSAL_REDIRECT_KEY = "_ra_msal_key";
 
 /**
  * Function that returns an authProvider using the Microsoft Authentication Library (MSAL),
@@ -93,6 +95,10 @@ export const msalAuthProvider = ({
 
   const authProvider = {
     async login() {
+      // We cannot use react-router location here, as we are not in a router context,
+      // So we need to fallback to native browser APIs.
+      sessionStorage.setItem(MSAL_REDIRECT_KEY, window.location.href);
+
       // Used when the redirection to the MS login form is done from a custom login page
       msalInstance.loginRedirect(loginRequest);
     },
@@ -127,7 +133,7 @@ export const msalAuthProvider = ({
 
       if (!account || !token) {
         if (redirectOnCheckAuth) {
-          msalInstance.loginRedirect(loginRequest);
+          await this.login();
 
           // Suppresses error message from being displayed
           throw { message: false };
@@ -153,6 +159,13 @@ export const msalAuthProvider = ({
         throw new Error("Authentication failed");
       }
       msalInstance.setActiveAccount(account);
+
+      // We cannot use react-router redirect here, as we are not in a router context,
+      // So we need to fallback to native browser APIs.
+      const redirectUrl =
+        sessionStorage.getItem(MSAL_REDIRECT_KEY) ?? window.location.origin;
+      window.location.replace(redirectUrl);
+      sessionStorage.removeItem(MSAL_REDIRECT_KEY);
     },
   };
 
