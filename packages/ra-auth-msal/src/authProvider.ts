@@ -39,7 +39,7 @@ export type MsalAuthProviderParams = {
   enableDeepLinkRedirect?: boolean;
 };
 
-const MSAL_REDIRECT_KEY = "_ra_msal_key";
+const MSAL_REDIRECT_KEY = "_ra_msal_redirect_key";
 
 /**
  * Function that returns an authProvider using the Microsoft Authentication Library (MSAL),
