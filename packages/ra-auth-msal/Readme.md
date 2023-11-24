@@ -378,6 +378,57 @@ const App = () => {
 export default App;
 ```
 
+
+### `enableDeepLinkRedirect`
+
+You can choose whether the authProvider should redirect to the page the user was visiting once the user has been authenticated (this allows easier URL sharing between users). By default, it is set to `true`.
+
+Note: This features relies on `sessionStorage` and is not available with Server-Side Rendering.
+
+You can disable this feature like this: 
+
+```jsx
+// in src/authConfig.js
+export const msalConfig = {
+  // ...
+};
+```
+
+```jsx
+// in src/App.jsx
+import React from 'react';
+import { Admin, Resource } from 'react-admin';
+import { BrowserRouter } from "react-router-dom";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { msalAuthProvider } from "ra-auth-msal";
+import { CustomLoginPage } from "./CustomLoginPage";
+import dataProvider from './dataProvider';
+import posts from './posts';
+import { msalConfig } from "./authConfig";
+
+const myMSALObj = new PublicClientApplication(msalConfig);
+
+const App = () => {
+  const authProvider = msalAuthProvider({
+    msalInstance: myMSALObj,
+    enableDeepLinkRedirect: false,
+  });
+
+  return (
+    <BrowserRouter>
+       <Admin
+           authProvider={authProvider}
+           dataProvider={dataProvider}
+           title="Example Admin"
+        >
+            <Resource name="posts" {...posts} />
+      </Admin>
+    </BrowserRouter>
+   );
+};
+export default App;
+```
+
 ### `msalHttpClient`
 
 `ra-auth-msal` includes an `msalHttpClient` that can be used to make authenticated requests to your API. This helper automatically adds the `accessToken` to the request headers.
