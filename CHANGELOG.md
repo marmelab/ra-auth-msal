@@ -1,3 +1,7 @@
+# 1.2.0
+
+* Add support for deep link redirect ([#9](https://github.com/marmelab/ra-auth-msal/pull/9) ([jonathan-marmelab](https://github.com/jonathan-marmelab)))
+
 # 1.1.0
 
 * Add support for automatic token refresh ([#7](https://github.com/marmelab/ra-auth-msal/pull/7)) ([djhi](https://github.com/djhi))
