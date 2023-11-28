@@ -4,15 +4,19 @@ An auth provider for [react-admin](https://github.com/marmelab/react-admin) that
 
 This is useful when using [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/) to authenticate your users.
 
+[![Documentation]][DocumentationLink] 
+[![Source Code]][SourceCodeLink] 
+
+[Documentation]: https://img.shields.io/badge/Documentation-green?style=for-the-badge
+[Source Code]: https://img.shields.io/badge/Source_Code-blue?style=for-the-badge
+
+[DocumentationLink]: ./packages/ra-auth-msal/Readme.md 'Documentation'
+[SourceCodeLink]: https://github.com/marmelab/ra-auth-msal/tree/main/packages/ra-auth-msal 'Source Code'
+
 This repository contains:
 
 -   The actual `ra-auth-msal` package
 -   A simple demo app you can run locally to try out `ra-auth-msal` with your own Azure AD instance
-
-## The `ra-auth-msal` package
-
--   Please have a look at the [DOCUMENTATION](./packages/ra-auth-msal/Readme.md)
--   And also the [source code](https://github.com/marmelab/ra-auth-msal/tree/main/src/packages/ra-auth-msal)
 
 ## Simple Demo
 
