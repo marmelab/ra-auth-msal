@@ -28,14 +28,14 @@ This repository contains:
 
 1. Clone this project
 
-You need to register and configure this demo application to use your own Azure AD instance. Please follow the steps below (taken from [the quickstart tutorial](https://learn.microsoft.com/en-us/azure/active-directory/develop/single-page-app-quickstart?pivots=devlang-javascript#option-2-manual-register-and-manually-configure-your-application-and-code-sample)):
+You need to register and configure this demo application to use your own Azure AD instance. Please follow the steps below (taken from [the quickstart tutorial](https://learn.microsoft.com/en-us/azure/active-directory/develop/single-page-app-quickstart?pivots=devlang-javascript#option-2-manual-register-and-manually-configure-your-application-and-code-sample)) or read [this blog  Marmelab's article](https://marmelab.com/blog/2023/09/13/active-directory-integration-tutorial.html) on React-Admin Authentication Using Active Directory.
 
 1. Sign in to the [Azure portal](https://portal.azure.com/).
 1. If you have access to multiple tenants, use the **Directories + subscriptions** filter  in the top menu to switch to the tenant in which you want to register the application.
-1. Search for and select **Azure Active Directory**.
+1. Search for and select **Microsoft Entra ID**.
 1. Under **Manage**, select **App registrations** > **New registration**.
 1. Enter a **Name** for your application. Users of your app might see this name, and you can change it later.
-1. Under **Supported account types**, select **Accounts in any organizational directory and personal Microsoft accounts**.
+1. Under **Supported account types**, select **Accounts in any organizational directory (Any Microsoft Entra ID tenant - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)**.
 1. Select **Register**. On the app **Overview** page, note the **Application (client) ID** value for later use.
 1. Under **Manage**, select **Authentication**.
 1. Under **Platform configurations**, select **Add a platform**. In the pane that opens select **Single-page application**.
@@ -44,26 +44,26 @@ You need to register and configure this demo application to use your own Azure A
 
 Now it is time to create some users and some groups, which will enable us to demonstrate the **permissions** feature.
 
-1. In the [Azure portal](https://portal.azure.com/), Search for and select **Azure Active Directory**.
-1. Under **Groups**, create a new group of type 'Security', called `admins`. Leave all the other options to their default values.
+1. In the [Azure portal](https://portal.azure.com/), Search for and select **Microsoft Entra ID**.
+1. Under **Manage**, select **Groups**, create a new group of type 'Security', called `admins`. Leave all the other options to their default values.
 1. In the same way, create a second group called `users`.
 1. Under **Users**, click **New user** > **Create a user**.
 1. Choose `chris` as the **User Name** and `Chris Green` as the **Name**.
-1. In **Password**, select **Allow me to create the password**, and choose a password of your choice.
-1. In **Groups and roles**, select only the `users` group.
+1. In **Password**, unselect **Auto-generate password**, and choose a password of your choice.
+1. In **Assignements**, select **Add group**, select only the `users` group and select **Select**.
 1. Make sure **Block sign in** is set to **false**
 1. Click **Create**.
 1. Repeat the same steps to create a second user, called `John Smith`, and assign it both the `users` and `admins` groups.
 
 Lastly, we need to configure the app to include the **goups** claim in the ID token.
 
-1. In the **Azure Active Directory** Dashboard
-1. Under **Manage**, select **App registrations** > and select the App you created before
+1. In the **Microsoft Entra ID** Dashboard
+1. Under **Manage**, select **App registrations**, then **All applications** > and select the App you created before
 1. Select **Token configuration**.
 1. Click on **Add groups claim**.
 1. Select **Security groups**
-1. Inside both the **ID** and **Access** sections, check the **Emit group claims as roles** checkbox.
-1. Click **Save**.
+1. Inside both the **ID** and **Access** sections, check the **Emit groups as role claims** checkbox.
+1. Click **Add**.
 
 Now we can configure the demo app. First we need to setup some environment variables. We can do this by creating a `.env` file in the root of the project.
 

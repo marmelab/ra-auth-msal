@@ -30,7 +30,6 @@ const TagEdit = () => {
       <ResourceContextProvider value="posts">
         <List
           actions={<ListActions hasCreate={false} />}
-          //   actions={<ListActions hasCreate={false} hasShow hasEdit hasList />}
           resource="posts"
           filter={{ tags: [id] }}
           title=" "
