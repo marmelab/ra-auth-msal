@@ -50,8 +50,8 @@ export const tokenRequest: SilentRequest = {
  * Customize this map to match your own roles and permissions
  */
 const rolesPermissionMap = {
-  "c5d67998-9cd1-4a28-9b6f-63dd084fdb78": "user",
-  "8fe1206d-db34-4274-90b2-b554f5672afb": "admin",
+  "12345678-1234-1234-1234-123456789012": "user",
+  "12345678-1234-1234-1234-123456789013": "admin",
 };
 
 /**
