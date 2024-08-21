@@ -73,7 +73,7 @@ const StyledDatagrid = styled(Datagrid)(({ theme }) => ({
     '& .publishedAt': { fontStyle: 'italic' },
 }));
 
-const PostListBulkActions = memo(({ ...props }) => (
+const PostListBulkActions = memo(({ ...props }: any) => (
     <Fragment>
         <ResetViewsButton {...props} />
         <BulkDeleteButton {...props} />
