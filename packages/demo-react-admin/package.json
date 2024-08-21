@@ -17,7 +17,6 @@
         "@tanstack/react-query-devtools": "^5.8.4",
         "jsonexport": "^3.2.0",
         "lodash": "~4.17.5",
-        "prop-types": "^15.7.2",
         "proxy-polyfill": "^0.3.0",
         "ra-auth-msal": "*",
         "ra-data-fakerest": "^5.1.2",
