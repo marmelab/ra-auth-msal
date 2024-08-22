@@ -28,7 +28,7 @@ This repository contains:
 
 1. Clone this project
 
-You need to register and configure this demo application to use your own Azure AD instance. Please follow the steps below (taken from [the quickstart tutorial](https://learn.microsoft.com/en-us/azure/active-directory/develop/single-page-app-quickstart?pivots=devlang-javascript#option-2-manual-register-and-manually-configure-your-application-and-code-sample)) or read [this blog  Marmelab's article](https://marmelab.com/blog/2023/09/13/active-directory-integration-tutorial.html) on React-Admin Authentication Using Active Directory.
+You need to register and configure this demo application to use your own Azure AD instance. Please follow the steps below (taken from [the quickstart tutorial](https://learn.microsoft.com/en-us/azure/active-directory/develop/single-page-app-quickstart?pivots=devlang-javascript#option-2-manual-register-and-manually-configure-your-application-and-code-sample)) or read the [React-Admin Authentication Using Active Directory](https://marmelab.com/blog/2023/09/13/active-directory-integration-tutorial.html) post on Marmelab's blog.
 
 1. Sign in to the [Azure portal](https://portal.azure.com/).
 1. If you have access to multiple tenants, use the **Directories + subscriptions** filter  in the top menu to switch to the tenant in which you want to register the application.
