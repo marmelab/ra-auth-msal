@@ -109,7 +109,7 @@ const PostCreate = () => {
                 <FileInput
                     source="pdffile"
                     label="PDF-Template"
-                    accept="application/pdf"
+                    accept={{ 'application/pdf': ['.pdf'] }}
                 >
                     <FileField source="src" title="title" />
                 </FileInput>
@@ -162,12 +162,11 @@ const PostCreate = () => {
                                 {({
                                     formData,
                                     scopedFormData,
-                                    getSource,
                                     ...rest
                                 }) =>
                                     scopedFormData && scopedFormData.user_id ? (
                                         <SelectInput
-                                            source={getSource('role')}
+                                            source='role'
                                             choices={[
                                                 {
                                                     id: 'headwriter',

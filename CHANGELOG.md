@@ -1,3 +1,8 @@
+## 2.0.0
+
+-   Upgrade `react-admin` to v5
+-   Remove prop-types
+
 # 1.2.0
 
 * Add support for deep link redirect ([#9](https://github.com/marmelab/ra-auth-msal/pull/9) ([jonathan-marmelab](https://github.com/jonathan-marmelab)))

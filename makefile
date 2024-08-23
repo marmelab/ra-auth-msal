@@ -17,10 +17,10 @@ build-demo-react-admin:
 build: build-ra-auth-msal build-demo-react-admin ## compile ES6 files to JS
 
 start-demo: ## Start the demo
-	@cd ./packages/demo-react-admin && yarn start
+	@cd ./packages/demo-react-admin && yarn dev
 
 start-fake-api: ## Start the fake API
-	@cd ./packages/demo-fake-api && yarn start
+	@cd ./packages/demo-fake-api && yarn dev
 
 start: ## Start the demo
 	@(trap 'kill 0' INT; ${MAKE} start-fake-api & ${MAKE} start-demo)
