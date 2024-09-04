@@ -49,7 +49,7 @@ export const msalConfig = {
 
 ```jsx
 // in src/App.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Admin, Resource } from 'react-admin';
 import { BrowserRouter } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -61,9 +61,20 @@ import { msalConfig } from "./authConfig";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
   });
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
@@ -113,7 +124,7 @@ export const getPermissionsFromAccount = async (account) => {
 
 ```jsx
 // in src/App.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Admin, Resource } from 'react-admin';
 import { BrowserRouter } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -125,10 +136,21 @@ import { msalConfig, getPermissionsFromAccount } from "./authConfig";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
     getPermissionsFromAccount,
   });
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
@@ -167,7 +189,7 @@ export const getIdentityFromAccount = async (account) => {
 
 ```jsx
 // in src/App.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Admin, Resource } from 'react-admin';
 import { BrowserRouter } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -179,10 +201,21 @@ import { msalConfig, getIdentityFromAccount } from "./authConfig";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
     getIdentityFromAccount,
   });
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
@@ -221,7 +254,7 @@ export const loginRequest = {
 
 ```jsx
 // in src/App.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Admin, Resource } from 'react-admin';
 import { BrowserRouter } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -233,10 +266,21 @@ import { msalConfig, loginRequest } from "./authConfig";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
     loginRequest,
   });
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
@@ -274,7 +318,7 @@ export const tokenRequest = {
 
 ```jsx
 // in src/App.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Admin, Resource } from 'react-admin';
 import { BrowserRouter } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -286,10 +330,21 @@ import { msalConfig, tokenRequest } from "./authConfig";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
     tokenRequest,
   });
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
@@ -344,7 +399,7 @@ export const CustomLoginPage = () => {
 
 ```jsx
 // in src/App.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Admin, Resource } from 'react-admin';
 import { BrowserRouter } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -357,10 +412,21 @@ import { msalConfig } from "./authConfig";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
     redirectOnCheckAuth: false,
   });
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
@@ -396,7 +462,7 @@ export const msalConfig = {
 
 ```jsx
 // in src/App.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Admin, Resource } from 'react-admin';
 import { BrowserRouter } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -409,10 +475,21 @@ import { msalConfig } from "./authConfig";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
     enableDeepLinkRedirect: false,
   });
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
@@ -453,7 +530,7 @@ export const tokenRequest = {
 
 ```jsx
 // in src/App.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Admin, Resource } from 'react-admin';
 import { BrowserRouter } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -465,6 +542,13 @@ import { msalConfig, tokenRequest } from "./authConfig";
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
     tokenRequest
@@ -479,6 +563,10 @@ const App = () => {
     "https://jsonplaceholder.typicode.com",
     httpClient
   );
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
