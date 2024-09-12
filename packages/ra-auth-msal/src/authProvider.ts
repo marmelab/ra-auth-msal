@@ -53,6 +53,7 @@ const MSAL_REDIRECT_KEY = "_ra_msal_redirect_key";
  *
  * @example
  * ```tsx
+ * import React, { useEffect } from "react";
  * import { PublicClientApplication } from "@azure/msal-browser";
  * import { LoginPage, msalAuthProvider } from "ra-auth-msal";
  * import { Admin } from "react-admin";
@@ -63,9 +64,20 @@ const MSAL_REDIRECT_KEY = "_ra_msal_redirect_key";
  * const myMSALObj = new PublicClientApplication(msalConfig);
  *
  * const App = () => {
+ *   const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+ *   useEffect(() => {
+ *     myMSALObj.initialize().then(() => {
+ *       setMSALInitialized(true);
+ *     });
+ *   }, []);
+ * 
  *   const authProvider = msalAuthProvider({
  *     msalInstance: myMSALObj,
  *   });
+ * 
+ *   if (!isMSALInitialized) {
+ *     return <div>Loading...</div>;
+ *   }
  *
  *   return (
  *     <BrowserRouter>

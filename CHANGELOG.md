@@ -1,3 +1,61 @@
+## 3.0.0
+
+-   Upgrade `@azure/msal-browser` to v3
+   
+### Breaking Changes
+
+In MSAL v3.x, you must initialize the application object by calling the `initialize` function asynchronously.
+
+One way to achieve this is by using the `useEffect` hook in your main component:
+
+```diff
+// in src/App.jsx
+-import React from 'react';
++import React, { useEffect } from "react";
+import { Admin, Resource } from 'react-admin';
+import { BrowserRouter } from "react-router-dom";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { LoginPage, msalAuthProvider } from "ra-auth-msal";
+import dataProvider from './dataProvider';
+import posts from './posts';
+import { msalConfig } from "./authConfig";
+
+const myMSALObj = new PublicClientApplication(msalConfig);
+
+const App = () => {
++ const [isMSALInitialized, setMSALInitialized] = React.useState(false);
++ useEffect(() => {
++   myMSALObj.initialize().then(() => {
++     setMSALInitialized(true);
++   });
++ }, []);
+
+  const authProvider = msalAuthProvider({
+    msalInstance: myMSALObj,
+  });
+
++ if (!isMSALInitialized) {
++   return <div>Loading...</div>;
++ }
+
+  return (
+    <BrowserRouter>
+       <Admin
+           authProvider={authProvider}
+           dataProvider={dataProvider}
+           title="Example Admin"
+           loginPage={LoginPage}
+        >
+            <Resource name="posts" {...posts} />
+      </Admin>
+    </BrowserRouter>
+   );
+};
+export default App;
+```
+
+See the MSAL [upgrade guide](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/v2-migration.md) for more information.
+
 ## 2.0.0
 
 -   Upgrade `react-admin` to v5

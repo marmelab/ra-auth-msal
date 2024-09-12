@@ -1,6 +1,6 @@
 {
   "name": "ra-auth-msal",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "repository": "git@github.com:marmelab/ra-auth-msal.git",
   "author": "Jean-Baptiste Kaiser <jb@marmelab.com> (https://marmelab.com/)",
   "license": "MIT",
@@ -15,7 +15,7 @@
   "types": "esm/index.d.ts",
   "sideEffects": false,
   "dependencies": {
-    "@azure/msal-browser": "^2.16.1",
+    "@azure/msal-browser": "^3.23.0",
     "react-admin": "^5.1.2"
   },
   "scripts": {

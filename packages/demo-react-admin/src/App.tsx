@@ -6,7 +6,7 @@ import {
   msalRefreshAuth,
 } from "ra-auth-msal";
 import jsonServerProvider from "ra-data-json-server";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Admin,
   CustomRoutes,
@@ -36,6 +36,13 @@ const redirectOnCheckAuth = true;
 const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
+  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  useEffect(() => {
+    myMSALObj.initialize().then(() => {
+      setMSALInitialized(true);
+    });
+  }, []);
+
   const authProvider = msalAuthProvider({
     msalInstance: myMSALObj,
     loginRequest,
@@ -56,6 +63,10 @@ const App = () => {
       tokenRequest,
     })
   );
+
+  if (!isMSALInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
