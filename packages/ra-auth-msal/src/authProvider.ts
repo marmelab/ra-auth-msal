@@ -93,7 +93,7 @@ const MSAL_REDIRECT_KEY = "_ra_msal_redirect_key";
  * };
  * ```
  */
-export const msalAuthProvider = ({
+export const msalAuthProvider = async ({
   msalInstance,
   loginRequest = defaultLoginRequest,
   tokenRequest = defaultTokenRequest,
@@ -101,11 +101,13 @@ export const msalAuthProvider = ({
   getIdentityFromAccount = defaultGetIdentityFromAccount,
   redirectOnCheckAuth = true,
   enableDeepLinkRedirect = true,
-}: MsalAuthProviderParams): AuthProvider => {
+}: MsalAuthProviderParams): Promise<AuthProvider> => {
   // We need to set up the redirect handler at a global scope to make sure all redirects are handled,
   // otherwise the lib can lock up because a redirect is still marked as pending and has not been handled.
   // Besides, we can call this handler again later and still gather the response because it is cached internally.
-  msalInstance.handleRedirectPromise();
+  // When using redirect APIs, handleRedirectPromise must be invoked when returning from the redirect:
+  // https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/errors.md#using-loginredirect-or-acquiretokenredirect
+  await msalInstance.handleRedirectPromise();
 
   const canDeepLinkRedirect =
     enableDeepLinkRedirect &&
