@@ -62,3 +62,8 @@ export const getPermissionsFromAccount = async (account: AccountInfo) => {
   const roles = account?.idTokenClaims?.roles ?? [];
   return roles.map((role) => rolesPermissionMap[role]);
 };
+
+/**
+ * Boolean indicating whether to redirect the user to the login request URL when checkAuth returns a falsy value.
+ */
+export const redirectOnCheckAuth = true;

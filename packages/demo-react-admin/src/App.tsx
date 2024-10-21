@@ -1,26 +1,15 @@
-import { PublicClientApplication } from "@azure/msal-browser";
+
 import {
   LoginPage,
-  msalAuthProvider,
-  msalHttpClient,
-  msalRefreshAuth,
 } from "ra-auth-msal";
-import jsonServerProvider from "ra-data-json-server";
 import React, { useEffect } from "react";
 import {
   Admin,
+  AuthProvider,
   CustomRoutes,
   Resource,
-  addRefreshAuthToAuthProvider,
-  addRefreshAuthToDataProvider,
 } from "react-admin";
 import { BrowserRouter, Route } from "react-router-dom";
-import {
-  getPermissionsFromAccount,
-  loginRequest,
-  msalConfig,
-  tokenRequest,
-} from "./authConfig";
 import comments from "./comments";
 import { CustomLoginPage } from "./CustomLoginPage";
 import CustomRouteLayout from "./customRouteLayout";
@@ -30,41 +19,24 @@ import Layout from "./Layout";
 import posts from "./posts";
 import tags from "./tags";
 import users from "./users";
+import { buildAuthProvider } from "./authProvider";
+import { dataProvider } from "./dataProvider";
+import { redirectOnCheckAuth } from "./authConfig";
 
-const redirectOnCheckAuth = true;
 
-const myMSALObj = new PublicClientApplication(msalConfig);
 
 const App = () => {
-  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
+  const [authProvider, setAuthProvider] = React.useState<AuthProvider>();
   useEffect(() => {
-    myMSALObj.initialize().then(() => {
-      setMSALInitialized(true);
-    });
+    const init = async () => {
+      setAuthProvider(await buildAuthProvider());
+    };
+
+    init();    
   }, []);
 
-  const authProvider = msalAuthProvider({
-    msalInstance: myMSALObj,
-    loginRequest,
-    tokenRequest,
-    getPermissionsFromAccount,
-    redirectOnCheckAuth,
-  });
 
-  const httpClient = msalHttpClient({
-    msalInstance: myMSALObj,
-    tokenRequest,
-  });
-
-  const dataProvider = addRefreshAuthToDataProvider(
-    jsonServerProvider("http://localhost:3000", httpClient),
-    msalRefreshAuth({
-      msalInstance: myMSALObj,
-      tokenRequest,
-    })
-  );
-
-  if (!isMSALInitialized) {
+  if (!authProvider) {
     return <div>Loading...</div>;
   }
 
