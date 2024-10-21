@@ -50,8 +50,8 @@ export const tokenRequest: SilentRequest = {
  * Customize this map to match your own roles and permissions
  */
 const rolesPermissionMap = {
-  "12345678-1234-1234-1234-123456789012": "user",
-  "12345678-1234-1234-1234-123456789013": "admin",
+  [import.meta.env.VITE_MSAL_USER_GROUP]: "user",
+  [import.meta.env.VITE_MSAL_ADMIN_GROUP]: "admin",
 };
 
 /**

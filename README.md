@@ -45,8 +45,8 @@ You need to register and configure this demo application to use your own Azure A
 Now it is time to create some users and some groups, which will enable us to demonstrate the **permissions** feature.
 
 1. In the [Azure portal](https://portal.azure.com/), Search for and select **Microsoft Entra ID**.
-1. Under **Manage**, select **Groups**, create a new group of type 'Security', called `admins`. Leave all the other options to their default values.
-1. In the same way, create a second group called `users`.
+1. Under **Manage**, select **Groups**, create a new group of type 'Security', called `admins`. Leave all the other options to their default values. Note its identifier (it looks like `8fe1206d-db34-4274-90b2-b554f5672afb`)
+1. Under **Manage**, select **Groups**, create a second group called `users`. Note its identifier (it looks like `8fe1206d-db34-4274-90b2-b554f5672afb`)
 1. Under **Users**, click **New user** > **Create a user**.
 1. Choose `chris` as the **User Name** and `Chris Green` as the **Name**.
 1. In **Password**, unselect **Auto-generate password**, and choose a password of your choice.
@@ -77,21 +77,11 @@ The following variables are required:
 VITE_MSAL_CLIENT_ID="12345678-1234-1234-1234-123456789012"
 VITE_MSAL_AUTHORITY="https://login.microsoftonline.com/common"
 VITE_APP_BASE_URI="http://localhost:8080"
+VITE_MSAL_ADMIN_GROUP="12345678-1234-1234-1234-123456789012"
+VITE_MSAL_USER_GROUP="12345678-1234-1234-1234-123456789013"
 ```
 
-Please fill in the `VITE_MSAL_CLIENT_ID` with the **Application (client) ID** you noted earlier.
-
-Lastly, we need to edit the `rolesPermissionMap` inside `packages/demo-react-admin/src/authConfig.ts` to match the groups you created earlier.
-
-```ts
-/**
- * Customize this map to match the ids of the groups you created in Azure AD
- */
-const rolesPermissionMap = {
-  "12345678-1234-1234-1234-123456789012": "user",
-  "12345678-1234-1234-1234-123456789013": "admin",
-};
-```
+Please fill in the `VITE_MSAL_CLIENT_ID` with the **Application (client) ID** you noted earlier, the `VITE_MSAL_ADMIN_GROUP` with the admin group identifier and the `VITE_MSAL_USER_GROUP` with the user group identifier
 
 We are now all set to run the demo app.
 
