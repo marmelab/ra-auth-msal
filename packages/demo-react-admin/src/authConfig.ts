@@ -50,8 +50,8 @@ export const tokenRequest: SilentRequest = {
  * Customize this map to match your own roles and permissions
  */
 const rolesPermissionMap = {
-  "12345678-1234-1234-1234-123456789012": "user",
-  "12345678-1234-1234-1234-123456789013": "admin",
+  [import.meta.env.VITE_MSAL_USER_GROUP]: "user",
+  [import.meta.env.VITE_MSAL_ADMIN_GROUP]: "admin",
 };
 
 /**
@@ -62,8 +62,3 @@ export const getPermissionsFromAccount = async (account: AccountInfo) => {
   const roles = account?.idTokenClaims?.roles ?? [];
   return roles.map((role) => rolesPermissionMap[role]);
 };
-
-/**
- * Boolean indicating whether to redirect the user to the login request URL when checkAuth returns a falsy value.
- */
-export const redirectOnCheckAuth = true;
