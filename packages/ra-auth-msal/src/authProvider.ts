@@ -125,7 +125,6 @@ export const msalAuthProvider = ({
     },
 
     async logout() {
-      await msalInstance.handleRedirectPromise();
       const account = msalInstance.getActiveAccount();
       if (account) {
         await msalInstance.logoutRedirect({ account });
