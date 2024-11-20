@@ -102,11 +102,10 @@ export const msalAuthProvider = ({
   redirectOnCheckAuth = true,
   enableDeepLinkRedirect = true,
 }: MsalAuthProviderParams): AuthProvider => {
-  // We need to set up the redirect handler at a global scope to make sure all redirects are handled,
-  // otherwise the lib can lock up because a redirect is still marked as pending and has not been handled.
-  // Besides, we can call this handler again later and still gather the response because it is cached internally.
-  msalInstance.handleRedirectPromise();
-
+  // We need to invoke handleRedirectPromise when the application uses redirect flows. 
+  // When using redirect flows, handleRedirectPromise should be run on every page load.
+  // https://learn.microsoft.com/en-us/entra/identity-platform/msal-js-initializing-client-applications#handleredirectpromise
+  
   const canDeepLinkRedirect =
     enableDeepLinkRedirect &&
     typeof window != undefined &&
@@ -114,6 +113,7 @@ export const msalAuthProvider = ({
 
   const authProvider = {
     async login() {
+      await msalInstance.handleRedirectPromise();
       if (canDeepLinkRedirect) {
         // We cannot use react-router location here, as we are not in a router context,
         // So we need to fallback to native browser APIs.
