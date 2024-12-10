@@ -1,3 +1,10 @@
+# Changelog
+
+## 3.0.1
+
+* Fix `uninitialized_public_client_application` and `interaction_in_progress` errors ([#16](https://github.com/marmelab/ra-auth-msal/pull/16)) ([benin-work](https://github.com/benin-work))
+* [Demo] Improve demo setup ([#17](https://github.com/marmelab/ra-auth-msal/pull/17)) ([djhi](https://github.com/djhi))
+
 ## 3.0.0
 
 -   Upgrade `@azure/msal-browser` to v3
