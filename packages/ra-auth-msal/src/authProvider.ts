@@ -70,11 +70,11 @@ const MSAL_REDIRECT_KEY = "_ra_msal_redirect_key";
  *       setMSALInitialized(true);
  *     });
  *   }, []);
- * 
+ *
  *   const authProvider = msalAuthProvider({
  *     msalInstance: myMSALObj,
  *   });
- * 
+ *
  *   if (!isMSALInitialized) {
  *     return <div>Loading...</div>;
  *   }
@@ -102,10 +102,10 @@ export const msalAuthProvider = ({
   redirectOnCheckAuth = true,
   enableDeepLinkRedirect = true,
 }: MsalAuthProviderParams): AuthProvider => {
-  // We need to invoke handleRedirectPromise when the application uses redirect flows. 
+  // We need to invoke handleRedirectPromise when the application uses redirect flows.
   // When using redirect flows, handleRedirectPromise should be run on every page load.
   // https://learn.microsoft.com/en-us/entra/identity-platform/msal-js-initializing-client-applications#handleredirectpromise
-  
+
   const canDeepLinkRedirect =
     enableDeepLinkRedirect &&
     typeof window != undefined &&
@@ -117,7 +117,9 @@ export const msalAuthProvider = ({
       if (canDeepLinkRedirect) {
         // We cannot use react-router location here, as we are not in a router context,
         // So we need to fallback to native browser APIs.
-        sessionStorage.setItem(MSAL_REDIRECT_KEY, window.location.href);
+        if (!sessionStorage.getItem(MSAL_REDIRECT_KEY)) {
+          sessionStorage.setItem(MSAL_REDIRECT_KEY, window.location.href);
+        }
       }
 
       // Used when the redirection to the MS login form is done from a custom login page
