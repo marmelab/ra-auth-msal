@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.2
+
+* Fix DeepLinkRedirect feature ([#18](https://github.com/marmelab/ra-auth-msal/pull/18)) ([erwanMarmelab](https://github.com/erwanMarmelab))
+
 ## 3.0.1
 
 * Fix `uninitialized_public_client_application` and `interaction_in_progress` errors ([#16](https://github.com/marmelab/ra-auth-msal/pull/16)) ([benin-work](https://github.com/benin-work))
