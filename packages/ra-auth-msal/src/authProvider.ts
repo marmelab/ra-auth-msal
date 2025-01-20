@@ -8,6 +8,7 @@ import {
 import { AuthProvider, addRefreshAuthToAuthProvider } from "react-admin";
 import { defaultTokenRequest } from "./constants";
 import { msalRefreshAuth } from "./refreshAuth";
+import { initializeMsalInstance } from "./initializeMsalInstance";
 
 const defaultLoginRequest = {
   scopes: ["User.Read"],
@@ -62,23 +63,11 @@ const MSAL_REDIRECT_KEY = "_ra_msal_redirect_key";
  * import { dataProvider } from "./dataProvider";
  *
  * const myMSALObj = new PublicClientApplication(msalConfig);
+ * const authProvider = msalAuthProvider({
+ *     msalInstance: myMSALObj,
+ * });
  *
  * const App = () => {
- *   const [isMSALInitialized, setMSALInitialized] = React.useState(false);
- *   useEffect(() => {
- *     myMSALObj.initialize().then(() => {
- *       setMSALInitialized(true);
- *     });
- *   }, []);
- *
- *   const authProvider = msalAuthProvider({
- *     msalInstance: myMSALObj,
- *   });
- *
- *   if (!isMSALInitialized) {
- *     return <div>Loading...</div>;
- *   }
- *
  *   return (
  *     <BrowserRouter>
  *       <Admin
@@ -113,6 +102,7 @@ export const msalAuthProvider = ({
 
   const authProvider = {
     async login() {
+      await initializeMsalInstance(msalInstance);
       await msalInstance.handleRedirectPromise();
       if (canDeepLinkRedirect) {
         // We cannot use react-router location here, as we are not in a router context,
@@ -127,6 +117,7 @@ export const msalAuthProvider = ({
     },
 
     async logout() {
+      await initializeMsalInstance(msalInstance);
       const account = msalInstance.getActiveAccount();
       if (account) {
         await msalInstance.logoutRedirect({ account });
@@ -134,12 +125,14 @@ export const msalAuthProvider = ({
     },
 
     async checkError({ status }) {
+      await initializeMsalInstance(msalInstance);
       if (status === 401 || status === 403) {
         throw new Error("Unauthorized");
       }
     },
 
     async checkAuth() {
+      await initializeMsalInstance(msalInstance);
       let account = msalInstance.getActiveAccount();
       if (!account) {
         const accounts = msalInstance.getAllAccounts();
@@ -166,16 +159,19 @@ export const msalAuthProvider = ({
     },
 
     async getPermissions() {
+      await initializeMsalInstance(msalInstance);
       const account = msalInstance.getActiveAccount();
       return getPermissionsFromAccount(account);
     },
 
     async getIdentity() {
+      await initializeMsalInstance(msalInstance);
       const account = msalInstance.getActiveAccount();
       return getIdentityFromAccount(account);
     },
 
     async handleCallback() {
+      await initializeMsalInstance(msalInstance);
       const response = await msalInstance.handleRedirectPromise();
       const account = response?.account;
       if (!account) {
@@ -196,6 +192,9 @@ export const msalAuthProvider = ({
 
   return addRefreshAuthToAuthProvider(
     authProvider,
-    msalRefreshAuth({ msalInstance, tokenRequest })
+    msalRefreshAuth({
+      msalInstance,
+      tokenRequest,
+    })
   );
 };

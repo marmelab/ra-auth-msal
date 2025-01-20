@@ -4,14 +4,16 @@ import {
   SilentRequest,
 } from "@azure/msal-browser";
 import { defaultTokenRequest } from "./constants";
+import { initializeMsalInstance } from "./initializeMsalInstance";
 
 export const msalRefreshAuth = ({
-  msalInstance,
+  msalInstance: msalInstanceProp,
   tokenRequest = defaultTokenRequest,
 }: {
-  msalInstance: PublicClientApplication;
+  msalInstance?: PublicClientApplication;
   tokenRequest: SilentRequest;
 }) => async () => {
+  const msalInstance = await initializeMsalInstance(msalInstanceProp);
   let account = msalInstance.getActiveAccount();
   if (!account) {
     const accounts = msalInstance.getAllAccounts();
