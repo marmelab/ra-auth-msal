@@ -6,12 +6,11 @@ import {
   msalRefreshAuth,
 } from "ra-auth-msal";
 import jsonServerProvider from "ra-data-json-server";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Admin,
   CustomRoutes,
   Resource,
-  addRefreshAuthToAuthProvider,
   addRefreshAuthToDataProvider,
 } from "react-admin";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -34,40 +33,28 @@ import users from "./users";
 const redirectOnCheckAuth = true;
 
 const myMSALObj = new PublicClientApplication(msalConfig);
+const authProvider = msalAuthProvider({
+  msalInstance: myMSALObj,
+  loginRequest,
+  tokenRequest,
+  getPermissionsFromAccount,
+  redirectOnCheckAuth,
+});
+
+const httpClient = msalHttpClient({
+  msalInstance: myMSALObj,
+  tokenRequest,
+});
+
+const dataProvider = addRefreshAuthToDataProvider(
+  jsonServerProvider("http://localhost:3000", httpClient),
+  msalRefreshAuth({
+    msalInstance: myMSALObj,
+    tokenRequest,
+  })
+);
 
 const App = () => {
-  const [isMSALInitialized, setMSALInitialized] = React.useState(false);
-  useEffect(() => {
-    myMSALObj.initialize().then(() => {
-      setMSALInitialized(true);
-    });
-  }, []);
-
-  const authProvider = msalAuthProvider({
-    msalInstance: myMSALObj,
-    loginRequest,
-    tokenRequest,
-    getPermissionsFromAccount,
-    redirectOnCheckAuth,
-  });
-
-  const httpClient = msalHttpClient({
-    msalInstance: myMSALObj,
-    tokenRequest,
-  });
-
-  const dataProvider = addRefreshAuthToDataProvider(
-    jsonServerProvider("http://localhost:3000", httpClient),
-    msalRefreshAuth({
-      msalInstance: myMSALObj,
-      tokenRequest,
-    })
-  );
-
-  if (!isMSALInitialized) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <BrowserRouter>
       <Admin
