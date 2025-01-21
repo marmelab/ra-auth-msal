@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0
+
+- Simplity `authProvider` setup ([#19](https://github.com/marmelab/ra-auth-msal/pull/19)) ([djhi](https://github.com/djhi))
+
 ## 3.0.2
 
 * Fix DeepLinkRedirect feature ([#18](https://github.com/marmelab/ra-auth-msal/pull/18)) ([erwanMarmelab](https://github.com/erwanMarmelab))

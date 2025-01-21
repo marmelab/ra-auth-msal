@@ -1,6 +1,6 @@
 {
   "name": "ra-auth-msal",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "repository": "git@github.com:marmelab/ra-auth-msal.git",
   "author": "Jean-Baptiste Kaiser <jb@marmelab.com> (https://marmelab.com/)",
   "license": "MIT",
