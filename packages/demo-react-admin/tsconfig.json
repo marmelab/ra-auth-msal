@@ -1,19 +1,21 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        /* TypeScript 6 turned `strict` on by default. This demo has never been strict;
+           keeping it off avoids unrelated churn across the UI code. */
+        "strict": false,
         "outDir": "lib",
         "rootDir": "src",
         "declaration": true,
         "allowJs": false,
         "jsx": "react",
-        "lib": ["es2017", "dom"],
+        "lib": ["ES2022", "DOM"],
         "target": "esnext",
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "types": ["jest", "node", "vite/client"],
+        "types": ["node", "vite/client"],
     },
     "include": ["src"]
 }

@@ -1,4 +1,3 @@
-/* eslint react/jsx-key: off */
 import PeopleIcon from '@mui/icons-material/People';
 import memoize from 'lodash/memoize';
 import { useMediaQuery, Theme } from '@mui/material';

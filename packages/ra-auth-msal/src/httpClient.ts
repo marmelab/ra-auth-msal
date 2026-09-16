@@ -1,5 +1,5 @@
 import { fetchUtils, Options } from "react-admin";
-import { PublicClientApplication, SilentRequest } from "@azure/msal-browser";
+import { IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
 
 const defaultTokenRequest = {
   scopes: ["User.Read"],
@@ -7,7 +7,7 @@ const defaultTokenRequest = {
 };
 
 export type MsalHttpClientParams = {
-  msalInstance: PublicClientApplication;
+  msalInstance: IPublicClientApplication;
   tokenRequest?: SilentRequest;
 };
 

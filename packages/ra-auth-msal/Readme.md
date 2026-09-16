@@ -25,6 +25,10 @@ yarn add ra-auth-msal
 npm install --save ra-auth-msal
 ```
 
+`ra-auth-msal` v4 requires `@azure/msal-browser` v5, `react-admin` v5 and React 18 or 19.
+If you are still on `@azure/msal-browser` v3 or v4, stay on `ra-auth-msal` v3 or read the
+[migration notes](https://github.com/marmelab/ra-auth-msal/blob/main/CHANGELOG.md) first.
+
 ## Basic Usage
 
 ```jsx
@@ -37,12 +41,9 @@ export const msalConfig = {
     authority: "https://login.microsoftonline.com/common",
     // Full redirect URL, in form of http://localhost:8080/auth-callback
     redirectUri: "http://localhost:8080/auth-callback",
-    // We need to disable this feature because it is already handled by react-admin, and would otherwise conflict
-    navigateToLoginRequestUrl: false,
   },
   cache: {
     cacheLocation: "sessionStorage",
-    storeAuthStateInCookie: false,
   },
 };
 ```
@@ -372,6 +373,24 @@ const App = () => {
 export default App;
 ```
 
+
+### `navigateToLoginRequestUrl`
+
+Whether MSAL should navigate back to the page that initiated the login request once the redirect
+flow completes. Defaults to `false`, because react-admin already performs that navigation and
+letting MSAL do it as well makes the two conflict.
+
+Up to MSAL v4 this was the `auth.navigateToLoginRequestUrl` option of `msalConfig`. MSAL v5 moved
+it to `handleRedirectPromise`, which `ra-auth-msal` calls internally, so it is now an option of
+`msalAuthProvider` instead:
+
+```jsx
+const authProvider = msalAuthProvider({
+  msalInstance: myMSALObj,
+  // let MSAL navigate back to the originating page itself
+  navigateToLoginRequestUrl: true,
+});
+```
 
 ### `enableDeepLinkRedirect`
 

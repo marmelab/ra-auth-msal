@@ -10,7 +10,7 @@ import {
     DialogActions,
 } from '@mui/material';
 
-import { ReferenceInput, SelectInput, useTranslate } from 'react-admin'; // eslint-disable-line import/no-unresolved
+import { ReferenceInput, SelectInput, useTranslate } from 'react-admin';
 
 import PostQuickCreate from './PostQuickCreate';
 import PostPreview from './PostPreview';

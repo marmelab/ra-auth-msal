@@ -7,7 +7,7 @@ import {
     SimpleForm,
     required,
     minLength,
-} from 'react-admin'; // eslint-disable-line import/no-unresolved
+} from 'react-admin';
 import PostReferenceInput from './PostReferenceInput';
 
 const now = new Date();

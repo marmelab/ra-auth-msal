@@ -1,4 +1,3 @@
-/* eslint react/jsx-key: off */
 import * as React from 'react';
 import { Edit, Identifier, SimpleForm, TextInput, required } from 'react-admin';
 

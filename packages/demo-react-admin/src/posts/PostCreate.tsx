@@ -202,7 +202,7 @@ const DependantInput = ({
     children,
 }: {
     dependency: string;
-    children: JSX.Element;
+    children: React.JSX.Element;
 }) => {
     const dependencyValue = useWatch({ name: dependency });
 

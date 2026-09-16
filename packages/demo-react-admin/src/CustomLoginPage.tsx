@@ -45,12 +45,11 @@ export const CustomLoginPage = () => {
     <Box
       component="form"
       onSubmit={submit}
-      display="flex"
-      justifyContent="center"
+      sx={{ display: "flex", justifyContent: "center" }}
     >
       <Card sx={{ width: 300, m: 8 }}>
         <CardContent>
-          <Typography variant="h5" component="div" textAlign="center">
+          <Typography variant="h5" component="div" sx={{ textAlign: "center" }}>
             Custom login page
           </Typography>
           <CardActions>

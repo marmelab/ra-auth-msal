@@ -29,7 +29,7 @@ import {
     downloadCSV,
     useListContext,
     useTranslate,
-} from 'react-admin'; // eslint-disable-line import/no-unresolved
+} from 'react-admin';
 
 const commentFilters = [
     <SearchInput source="q" alwaysOn />,
@@ -69,7 +69,7 @@ const CommentGrid = () => {
     return (
         <Grid spacing={2} container>
             {data.map(record => (
-                <Grid item key={record.id} sm={12} md={6} lg={4}>
+                <Grid key={record.id} size={{ sm: 12, md: 6, lg: 4 }}>
                     <Card
                         sx={{
                             height: '100%',
@@ -129,11 +129,6 @@ const CommentGrid = () => {
             ))}
         </Grid>
     );
-};
-
-CommentGrid.defaultProps = {
-    data: {},
-    ids: [],
 };
 
 const CommentMobileList = () => (

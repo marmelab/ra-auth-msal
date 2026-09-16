@@ -31,7 +31,7 @@ import {
     useCreateSuggestionContext,
     EditActionsProps,
     usePermissions,
-} from 'react-admin'; // eslint-disable-line import/no-unresolved
+} from 'react-admin';
 import {
     Box,
     BoxProps,
@@ -108,10 +108,12 @@ const PostEdit = () => {
             >
                 <FormTab label="post.form.summary">
                     <SanitizedBox
-                        display="flex"
-                        flexDirection="column"
-                        width="100%"
-                        justifyContent="space-between"
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            width: '100%',
+                            justifyContent: 'space-between',
+                        }}
                         fullWidth
                     >
                         <TextInput disabled source="id" />

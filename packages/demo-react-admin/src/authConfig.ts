@@ -18,12 +18,13 @@ export const msalConfig: Configuration = {
     authority: import.meta.env.VITE_MSAL_AUTHORITY,
     // Full redirect URL, in form of http://localhost:8080/auth-callback
     redirectUri: `${import.meta.env.VITE_APP_BASE_URI}/auth-callback`,
-    // We need to disable this feature because it is already handled by react-admin, and would otherwise conflict
-    navigateToLoginRequestUrl: false,
+    // Note: `navigateToLoginRequestUrl` used to be configured here. MSAL v5 moved it to
+    // `handleRedirectPromise`, so `ra-auth-msal` now owns it: `msalAuthProvider` accepts a
+    // `navigateToLoginRequestUrl` param, which defaults to `false` because react-admin already
+    // handles that navigation and letting MSAL do it as well would conflict.
   },
   cache: {
     cacheLocation: "sessionStorage", // This configures where your cache will be stored
-    storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
   },
 };
 

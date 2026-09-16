@@ -1,7 +1,7 @@
 import {
   AccountInfo,
   AuthenticationResult,
-  PublicClientApplication,
+  IPublicClientApplication,
   RedirectRequest,
   SilentRequest,
 } from "@azure/msal-browser";
@@ -27,17 +27,18 @@ const defaultGetIdentityFromAccount = async (account: AccountInfo) => {
 };
 
 export type MsalAuthProviderParams = {
-  msalInstance: PublicClientApplication;
+  msalInstance: IPublicClientApplication;
   loginRequest?: RedirectRequest;
   tokenRequest?: SilentRequest;
   getPermissionsFromAccount?: (
     account: AccountInfo
-  ) => ReturnType<AuthProvider["getPermissions"]>;
+  ) => ReturnType<NonNullable<AuthProvider["getPermissions"]>>;
   getIdentityFromAccount?: (
     account: AccountInfo
-  ) => ReturnType<AuthProvider["getIdentity"]>;
+  ) => ReturnType<NonNullable<AuthProvider["getIdentity"]>>;
   redirectOnCheckAuth?: boolean;
   enableDeepLinkRedirect?: boolean;
+  navigateToLoginRequestUrl?: boolean;
 };
 
 const MSAL_REDIRECT_KEY = "_ra_msal_redirect_key";
@@ -51,10 +52,16 @@ const MSAL_REDIRECT_KEY = "_ra_msal_redirect_key";
  * @param tokenRequest - The token request configuration object
  * @param getPermissionsFromAccount - Function allowing to customize how to compute the permissions from the account info
  * @param getIdentityFromAccount - Function allowing to customize how to compute the identity from the account info
+ * @param redirectOnCheckAuth - Whether to redirect to the MS login form when the user is not authenticated
+ * @param enableDeepLinkRedirect - Whether to redirect back to the originally requested URL after login
+ * @param navigateToLoginRequestUrl - Whether MSAL should navigate back to the page that initiated the login
+ * request once the redirect flow completes. Defaults to `false`, because react-admin already handles that
+ * navigation and letting MSAL do it as well causes the two to conflict. In MSAL v4 and below this was the
+ * `auth.navigateToLoginRequestUrl` configuration option; MSAL v5 moved it to `handleRedirectPromise`.
  *
  * @example
  * ```tsx
- * import React, { useEffect } from "react";
+ * import React from "react";
  * import { PublicClientApplication } from "@azure/msal-browser";
  * import { LoginPage, msalAuthProvider } from "ra-auth-msal";
  * import { Admin } from "react-admin";
@@ -90,6 +97,7 @@ export const msalAuthProvider = ({
   getIdentityFromAccount = defaultGetIdentityFromAccount,
   redirectOnCheckAuth = true,
   enableDeepLinkRedirect = true,
+  navigateToLoginRequestUrl = false,
 }: MsalAuthProviderParams): AuthProvider => {
   // We need to invoke handleRedirectPromise when the application uses redirect flows.
   // When using redirect flows, handleRedirectPromise should be run on every page load.
@@ -97,13 +105,13 @@ export const msalAuthProvider = ({
 
   const canDeepLinkRedirect =
     enableDeepLinkRedirect &&
-    typeof window != undefined &&
-    typeof sessionStorage != undefined;
+    typeof window !== "undefined" &&
+    typeof sessionStorage !== "undefined";
 
   const authProvider = {
     async login() {
       await initializeMsalInstance(msalInstance);
-      await msalInstance.handleRedirectPromise();
+      await msalInstance.handleRedirectPromise({ navigateToLoginRequestUrl });
       if (canDeepLinkRedirect) {
         // We cannot use react-router location here, as we are not in a router context,
         // So we need to fallback to native browser APIs.
@@ -172,7 +180,9 @@ export const msalAuthProvider = ({
 
     async handleCallback() {
       await initializeMsalInstance(msalInstance);
-      const response = await msalInstance.handleRedirectPromise();
+      const response = await msalInstance.handleRedirectPromise({
+        navigateToLoginRequestUrl,
+      });
       const account = response?.account;
       if (!account) {
         throw new Error("Authentication failed");
@@ -184,8 +194,8 @@ export const msalAuthProvider = ({
         // So we need to fallback to native browser APIs.
         const redirectUrl =
           sessionStorage.getItem(MSAL_REDIRECT_KEY) ?? window.location.origin;
-        window.location.replace(redirectUrl);
         sessionStorage.removeItem(MSAL_REDIRECT_KEY);
+        window.location.replace(redirectUrl);
       }
     },
   };

@@ -1,8 +1,4 @@
-import {
-  AuthenticationResult,
-  PublicClientApplication,
-  SilentRequest,
-} from "@azure/msal-browser";
+import { IPublicClientApplication, SilentRequest } from "@azure/msal-browser";
 import { defaultTokenRequest } from "./constants";
 import { initializeMsalInstance } from "./initializeMsalInstance";
 
@@ -10,7 +6,7 @@ export const msalRefreshAuth = ({
   msalInstance: msalInstanceProp,
   tokenRequest = defaultTokenRequest,
 }: {
-  msalInstance?: PublicClientApplication;
+  msalInstance?: IPublicClientApplication;
   tokenRequest: SilentRequest;
 }) => async () => {
   const msalInstance = await initializeMsalInstance(msalInstanceProp);
@@ -20,12 +16,11 @@ export const msalRefreshAuth = ({
     account = accounts[0];
   }
 
-  let token: AuthenticationResult | null = null;
   if (account) {
-    token = await msalInstance.acquireTokenSilent({
+    // Acquiring the token is what refreshes it in the MSAL cache; the result is not needed here.
+    await msalInstance.acquireTokenSilent({
       account,
       ...tokenRequest,
     });
   }
-  return Promise.resolve();
 };

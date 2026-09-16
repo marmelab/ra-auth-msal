@@ -22,7 +22,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 const TagList = () => (
     <ListBase perPage={1000}>
         <ListActions />
-        <Box maxWidth="20em" marginTop="1em">
+        <Box sx={{ maxWidth: '20em', marginTop: '1em' }}>
             <Card>
                 <Tree />
             </Card>

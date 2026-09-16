@@ -1,8 +1,8 @@
-import { PublicClientApplication } from "@azure/msal-browser";
+import { IPublicClientApplication } from "@azure/msal-browser";
 
 let msalInstanceSetupPromise: Promise<void> | null = null;
 
-export const initializeMsalInstance = async (msalInstance: PublicClientApplication) => {
+export const initializeMsalInstance = async (msalInstance: IPublicClientApplication) => {
   if (!msalInstanceSetupPromise) {
     msalInstanceSetupPromise = msalInstance.initialize();
   }
