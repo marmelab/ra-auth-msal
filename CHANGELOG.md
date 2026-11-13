@@ -14,6 +14,8 @@
 
 Import from `ra-auth-msal` instead. `defaultTokenRequest` and `initializeMsalInstance`, previously only reachable through these paths, are now exported from the package root.
 
+The published code now targets ES2020 instead of ES5, so it no longer runs in browsers without ES2020 support, such as Internet Explorer 11.
+
 ## 3.1.0
 
 - Simplity `authProvider` setup ([#19](https://github.com/marmelab/ra-auth-msal/pull/19)) ([djhi](https://github.com/djhi))
