@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.0.0
+
+- Publish modern ESM and CommonJS package exports ([#22](https://github.com/marmelab/ra-auth-msal/pull/22)) ([pysnooLab](https://github.com/pysnooLab))
+
+### Breaking Changes
+
+`ra-auth-msal` now publishes its ES modules and CommonJS builds in `dist/`, behind an [`exports`](https://nodejs.org/api/packages.html#package-entry-points) map. Only the package root can be imported, so these undocumented paths no longer resolve:
+
+- the old build folders: `ra-auth-msal/lib/*` and `ra-auth-msal/esm/*`
+- the sources: `ra-auth-msal/src/*`, even though they are still published
+- the manifest: `ra-auth-msal/package.json`
+
+Import from `ra-auth-msal` instead. `defaultTokenRequest` and `initializeMsalInstance`, previously only reachable through these paths, are now exported from the package root.
+
+The published code now targets ES2020 instead of ES5, so it no longer runs in browsers without ES2020 support, such as Internet Explorer 11.
+
 ## 3.1.0
 
 - Simplity `authProvider` setup ([#19](https://github.com/marmelab/ra-auth-msal/pull/19)) ([djhi](https://github.com/djhi))
