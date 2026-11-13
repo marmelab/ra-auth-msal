@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 4.0.0
 
 - Publish modern ESM and CommonJS package exports ([#22](https://github.com/marmelab/ra-auth-msal/pull/22)) ([pysnooLab](https://github.com/pysnooLab))
 
