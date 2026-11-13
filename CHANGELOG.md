@@ -12,6 +12,8 @@
 - the sources: `ra-auth-msal/src/*`, even though they are still published
 - the manifest: `ra-auth-msal/package.json`
 
+Import from `ra-auth-msal` instead. `defaultTokenRequest` and `initializeMsalInstance`, previously only reachable through these paths, are now exported from the package root.
+
 ## 3.1.0
 
 - Simplity `authProvider` setup ([#19](https://github.com/marmelab/ra-auth-msal/pull/19)) ([djhi](https://github.com/djhi))
